@@ -22,7 +22,7 @@ npm init -y
 
 Installera paket:
 ```
-npm install express cors dotenv jsonwebtoken bcrypt pg
+npm install express cors dotenv jsonwebtoken bcrypt pg body-parser
 ```
 
 Installera nodemon:
