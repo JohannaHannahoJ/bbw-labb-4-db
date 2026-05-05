@@ -34,6 +34,9 @@ npm run serve
 ```
 ## Databas
 Databasen är skapad via Renders PostgreSQL-tjänst. 
-Basrelationer:
+
+Projektet har en `.env`-fil för känsliga uppgifter. Se `.env.sample` för aktuella variabler.
+
+### Basrelationer
 User (id (PK), Username, Password, Account_created)
 Entries (id (PK), User_id (FK), Content, Created_at)
