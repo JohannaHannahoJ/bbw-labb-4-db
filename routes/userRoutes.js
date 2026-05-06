@@ -4,6 +4,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 const client = require("../db");
+const jwt = require("jsonwebtoken");
 
 // routes
 // Lägg till användare
@@ -72,8 +73,14 @@ router.post("/login", async (req, res) => {
             return res.status(401).json({ message: "Incorrect username/password" });
         }
 
-        // korrekt login
-        res.status(200).json({ message: "Correct login!" });
+        // skapa payload
+        const payload = { id: user.id };
+
+        // skapa en JWT token
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+
+        // korrekt login meddelande
+        res.status(200).json({ message: "Correct login!", token });
 
     } catch (error) {
         console.error(error);
