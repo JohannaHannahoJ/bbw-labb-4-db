@@ -10,10 +10,23 @@ const jwt = require("jsonwebtoken");
 // Lägg till användare
 router.post("/register", async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const username = req.body.username?.trim();
+        const password = req.body.password;
 
         if (!username || !password) {
             return res.status(400).json({ message: "Fyll i användarnamn och lösenord" });
+        }
+
+        // Kontrollera att användarnamnet är minst 4 tecken
+        if (username.length < 4) {
+            return res.status(400).json({
+                message: "Användarnamnet måste vara minst 4 tecken."
+            });
+        }
+
+        // Kontrollera att lösenordet är minst 8 tecken
+        if (password.length < 8) {
+            return res.status(400).json({ message: "Lösenordet måste vara minst 8 tecken." })
         }
 
         // kolla om user finns
