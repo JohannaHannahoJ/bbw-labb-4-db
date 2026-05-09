@@ -13,7 +13,7 @@ router.post("/register", async (req, res) => {
         const { username, password } = req.body;
 
         if (!username || !password) {
-            return res.status(400).json({ error: "Invalid input" });
+            return res.status(400).json({ message: "Fyll i användarnamn och lösenord" });
         }
 
         // kolla om user finns
@@ -23,7 +23,7 @@ router.post("/register", async (req, res) => {
 
         // om användare med samma namn finns, kryptiskt felmeddelande
         if (result.rows.length > 0) {
-            return res.status(409).json({ error: "Registration failed" });
+            return res.status(409).json({ message: "Registreringen misslyckades" });
         }
 
         // hash password
@@ -34,11 +34,11 @@ router.post("/register", async (req, res) => {
             "INSERT INTO users (username, password) VALUES ($1, $2)", [username, hashedPassword]
         );
 
-        res.status(201).json({ message: "User created" });
+        res.status(201).json({ message: "Användare skapad" });
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Server error" });
+        res.status(500).json({ message: "Serverfel" });
     }
 });
 
@@ -49,7 +49,7 @@ router.post("/login", async (req, res) => {
 
         // validera input
         if (!username || !password) {
-            return res.status(400).json({ error: "Invalid input, send username and password" });
+            return res.status(400).json({ message: "Fyll i användarnamn och lösenord" });
         }
 
         // hämta user
@@ -59,7 +59,7 @@ router.post("/login", async (req, res) => {
 
         // om användare inte finns
         if (result.rows.length === 0) {
-            return res.status(401).json({ message: "Incorrect username/password" });
+            return res.status(401).json({ message: "Fel användarnamn eller lösenord" });
         }
 
         // spara matchande användaren från db
@@ -70,7 +70,7 @@ router.post("/login", async (req, res) => {
 
         // om password inte stämmer, felmeddelande och hoppa ur funktionen
         if (!passwordMatch) {
-            return res.status(401).json({ message: "Incorrect username/password" });
+            return res.status(401).json({ message: "Fel användarnamn eller lösenord" });
         }
 
         // skapa payload
@@ -80,11 +80,11 @@ router.post("/login", async (req, res) => {
         const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
 
         // korrekt login meddelande
-        res.status(200).json({ message: "Correct login!", token });
+        res.status(200).json({ message: "Lyckad inloggning!", token });
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Server error" });
+        res.status(500).json({ message: "Serverfel" });
     }
 });
 

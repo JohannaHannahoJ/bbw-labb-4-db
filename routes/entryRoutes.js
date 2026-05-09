@@ -19,7 +19,7 @@ router.get("/", authenticateToken, async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Server error" });
+        res.status(500).json({ message: "Serverfel" });
     }
 });
 
@@ -30,18 +30,18 @@ router.post("/", authenticateToken, async (req, res) => {
         const { content } = req.body;
 
         if (!content) {
-            return res.status(400).json({ error: "Content is required" });
+            return res.status(400).json({ message: "Inlägget får inte vara tomt." });
         }
 
         await client.query(
             "INSERT INTO entries (content, user_id) VALUES ($1, $2)", [content, userId]
         );
 
-        res.status(201).json({ message: "Entry created" });
+        res.status(201).json({ message: "Inlägg skapat." });
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Server error" });
+        res.status(500).json({ message: "Serverfel" });
     }
 });
 
