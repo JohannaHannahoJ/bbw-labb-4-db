@@ -22,7 +22,7 @@ npm init -y
 
 Installera paket:
 ```
-npm install express cors dotenv jsonwebtoken bcrypt pg´
+npm install express cors dotenv jsonwebtoken bcrypt pg body-parser
 ```
 
 Installera nodemon:
@@ -32,5 +32,17 @@ Kör projektet:
 ```
 npm run serve
 ```
+## Databas
+Databasen är skapad via Renders PostgreSQL-tjänst. 
 
+Projektet har en `.env`-fil för känsliga uppgifter. Se `.env.sample` för aktuella variabler.
 
+För att skapa databasen körs:
+```
+node install.js
+```
+Install.js kopplar då upp sig mot Renders PostgreSQL och skapar tabellerna.
+
+### Basrelationer
+User (id (PK), Username, Password, Account_created)
+Entries (id (PK), User_id (FK), Content, Created_at)
