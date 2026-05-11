@@ -2,6 +2,8 @@
 
 **Genomförd av: joha2102**
 
+Länk till API:t: https://bbw-labb-4-db.onrender.com
+
 ## Projektbeskrivning
 
 Detta projekt är del 1 av Laboration 4 i kursen *Backend-baserad webbutveckling*.
